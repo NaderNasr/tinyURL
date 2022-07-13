@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Box, Button, Grid, Typography } from "@material-ui/core"
+import { Box, Button, Divider, Grid, Typography } from "@material-ui/core"
 import NavBar from './NavBar'
 import LinkItem from './LinkItem'
 
@@ -24,7 +24,7 @@ const Account = () => {
       <Box mt={5}>
         <Grid container justifyContent='center'>
           <Grid item xs={8}>
-            <Box display='flex'>
+            <Box display='flex' mb={5}>
               <Box mr={3}>
                 <Typography variant='h4'>
                   Links
@@ -33,11 +33,15 @@ const Account = () => {
               <Button variant='contained' color='primary'>Shorten Link</Button>
             </Box>
             {links.map(link =>
-              <LinkItem
-                key={link.id}
-                //faster way to send all props to linkItem component
-                {...link}
-              />
+              <>
+                <LinkItem
+                  key={link.id}
+                  //faster way to send all props to linkItem component
+                  {...link}
+                />
+                <Box mt={5}/>
+                <Divider />
+              </>
             )}
           </Grid>
         </Grid>
