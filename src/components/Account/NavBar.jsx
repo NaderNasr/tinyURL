@@ -4,7 +4,7 @@ import React from 'react'
 const NavBar = () => {
   return (
     <>
-      <AppBar position='static'>
+      <AppBar position='static' color='primary' elevation={0}>
         <Toolbar>
           <Typography variant='h6'>Tiny</Typography>
           <Box ml='auto'>
