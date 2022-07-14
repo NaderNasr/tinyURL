@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { Fragment, useState } from 'react'
 import { Box, Button, Divider, Grid, Typography } from "@material-ui/core"
 import NavBar from './NavBar'
 import LinkItem from './LinkItem'
@@ -6,6 +6,14 @@ import LinkItem from './LinkItem'
 const data = [
   {
     id: '1a2b3c4d',
+    createdAt: new Date(),
+    name: 'Portfolio',
+    longURL: 'www.nadernasr.ca',
+    shortHash: '1d3AbC',
+    numOfClicks: 7
+  },
+  {
+    id: '1a2b332c4d',
     createdAt: new Date(),
     name: 'Portfolio',
     longURL: 'www.nadernasr.ca',
@@ -33,15 +41,15 @@ const Account = () => {
               <Button variant='contained' color='primary'>Shorten Link</Button>
             </Box>
             {links.map(link =>
-              <>
+              <Fragment key={link.id}>
                 <LinkItem
-                  key={link.id}
                   //faster way to send all props to linkItem component
                   {...link}
                 />
-                <Box mt={5}/>
+                <Box my={5}>
                 <Divider />
-              </>
+                </Box>
+              </Fragment>
             )}
           </Grid>
         </Grid>
