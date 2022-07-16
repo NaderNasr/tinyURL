@@ -24,7 +24,19 @@ const LinkItem = ({ id, createdAt, name, longURL, shortHash, numOfClicks }) => {
             <Typography>
               {window.location.hostname}/{shortHash}
             </Typography>
-            <Button variant="outlined" size="small">Copy</Button>
+            <Button
+              variant="outlined"
+              size="small"
+              style={{marginLeft:'20px', color:'blue'}}>
+              Copy
+            </Button>
+            <Button
+              variant="outlined"
+              size="small"
+              style={{marginLeft:'20px', color:'red'}}>
+              Delete
+            </Button>
+
           </Box>
         </Box>
         <Box display='flex'>
