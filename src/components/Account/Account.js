@@ -2,6 +2,7 @@ import React, { Fragment, useState } from 'react'
 import { Box, Button, Divider, Grid, Typography } from "@material-ui/core"
 import NavBar from './NavBar'
 import LinkItem from './LinkItem'
+import ShortenModal from './ShortenModal'
 
 const data = [
   {
@@ -25,10 +26,12 @@ const data = [
 const Account = () => {
 
   const [links, setLinks] = useState(data);
+  const [openModal, setOpenModal] = useState(false)
 
   return (
     <>
       <NavBar />
+      <ShortenModal openModal={openModal} handleClose={() => setOpenModal(false)}/>
       <Box mt={5}>
         <Grid container justifyContent='center'>
           <Grid item xs={8}>
@@ -38,7 +41,7 @@ const Account = () => {
                   Links
                 </Typography>
               </Box>
-              <Button variant='contained' color='primary'>Shorten Link</Button>
+              <Button variant='contained' color='primary' onClick={() => setOpenModal(true)}>Shorten Link</Button>
             </Box>
             {links.map(link =>
               <Fragment key={link.id}>
