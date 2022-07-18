@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import { Box } from '@material-ui/core'
 import UseAnimations from 'react-useanimations';
 // EVERY ANIMATION NEEDS TO BE IMPORTED FIRST -> YOUR BUNDLE WILL INCLUDE ONLY WHAT IT NEEDS
-import infinity from 'react-useanimations/lib/infinity'
+import loading2 from 'react-useanimations/lib/loading2'
 import { auth } from './firebase'
 
 import Account from "./components/Account/Account"
@@ -25,13 +25,15 @@ const App = () => {
 
   if (isLoaded) return (
     <Box mt={5} display='flex' justifyContent='center'>
-        <UseAnimations animation={infinity} />
+        <UseAnimations animation={loading2} size={75}/>
     </Box>
   )
+
+  // console.log(user)
   return (
     <Router>
       <Routes>
-        {!isLoaded ?
+        {user ?
           <>
             <Route path="/account" element={<Account />} />
           </>
