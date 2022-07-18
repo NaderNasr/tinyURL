@@ -4,7 +4,7 @@ import { useState } from 'react'
 
 
 
-const ShortenModal = ({ openModal, handleClose }) => {
+const ShortenModal = ({ handleClose }) => {
 
   const [form, setForm] = useState({
     name: '',
@@ -19,10 +19,10 @@ const ShortenModal = ({ openModal, handleClose }) => {
   }
 
   return (
-    <Dialog open={openModal} fullWidth>
+    <Dialog open={true} fullWidth>
       <DialogTitle>
         <Box display='flex' alignItems='center' justifyContent='space-between'>
-          Shorten URL
+          New Shorten URL
           <IconButton onClick={handleClose}>
             <Close />
           </IconButton>
