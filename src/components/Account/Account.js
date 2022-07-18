@@ -31,7 +31,7 @@ const Account = () => {
   return (
     <>
       <NavBar />
-      <ShortenModal openModal={openModal} handleClose={() => setOpenModal(false)}/>
+      {openModal ? <ShortenModal openModal={openModal} handleClose={() => setOpenModal(false)}/> : <></>}
       <Box mt={5}>
         <Grid container justifyContent='center'>
           <Grid item xs={8}>
