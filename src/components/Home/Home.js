@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Typography, TextField, Button } from "@material-ui/core"
-import {auth, firebase} from '../../firebase'
+import { auth } from '../../firebase'
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 
 const Home = () => {
@@ -26,7 +26,7 @@ const Home = () => {
   return (
     <>
       <Typography>Home</Typography>
-      
+
       <TextField
         value={form.email}
         name='email'
