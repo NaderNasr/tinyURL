@@ -19,12 +19,13 @@ const Account = () => {
 
   const collectionReference = collection(db, 'users');
 
+  const getLinksFromUser = async () => {
+    const data = await getDocs(collectionReference);
+    setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+  }
+
   useEffect(() => {
-    const getUsers = async () => {
-      const data = await getDocs(collectionReference);
-      setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    };
-    getUsers();
+    getLinksFromUser()
   }, [])
 
   const createShortLink = async () => {
@@ -40,10 +41,10 @@ const Account = () => {
       currentUser: userId
     })
 
+
+    getLinksFromUser()
     setOpenModal(false)
     console.log('users', users)
-
-
   }
 
   return (
