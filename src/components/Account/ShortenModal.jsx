@@ -4,7 +4,7 @@ import { useState } from 'react'
 
 
 
-const ShortenModal = ({ handleClose }) => {
+const ShortenModal = ({ handleClose, createShortLink, setName, setLinks }) => {
 
   const [form, setForm] = useState({
     name: '',
@@ -16,6 +16,10 @@ const ShortenModal = ({ handleClose }) => {
       ...oldForm,
       [e.target.name]: e.target.value
     }))
+  }
+
+  const handleSubmit = () => {
+    createShortLink(form.name, form.longURL)
   }
 
   return (
@@ -30,13 +34,13 @@ const ShortenModal = ({ handleClose }) => {
       </DialogTitle>
       <DialogContent>
         <Box mb={3}>
-          <TextField value={form.name} name='name' onChange={handleChange} fullWidth variant='filled' label='Name' />
+          <TextField value={setName(form.name)} name='name' onChange={handleChange} fullWidth variant='filled' label='Name' />
         </Box>
-        <TextField value={form.longURL} name='longURL' onChange={handleChange} fullWidth variant='filled' label='Long URL' />
+        <TextField value={setLinks(form.longURL)} name='longURL' onChange={handleChange} fullWidth variant='filled' label='Long URL' />
       </DialogContent>
       <DialogActions>
         <Box mr={2} my={1}>
-          <Button onClick={() => console.log(form)} color='primary' variant='contained' disableElevation>Shorten URL</Button>
+          <Button onClick={handleSubmit} color='primary' variant='contained' disableElevation>Shorten URL</Button>
         </Box>
       </DialogActions>
     </Dialog>
