@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom"
 import { Box } from '@material-ui/core'
 import UseAnimations from 'react-useanimations';
 // EVERY ANIMATION NEEDS TO BE IMPORTED FIRST -> YOUR BUNDLE WILL INCLUDE ONLY WHAT IT NEEDS
@@ -25,22 +25,21 @@ const App = () => {
 
   if (isLoaded) return (
     <Box mt={5} display='flex' justifyContent='center'>
-        <UseAnimations animation={loading2} size={75}/>
+      <UseAnimations animation={loading2} size={75} />
     </Box>
   )
 
   // console.log(user)
   return (
     <Router>
+      {!user ?
+        <Link to='/'>Home</Link>
+        :
+        <Link to='/account'>Account</Link>
+      }
       <Routes>
-        {user ?
-          <>
-            <Route path="/account" element={<Account />} />
-          </>
-          :
-          <>
-            <Route exact path="/" element={<Home />} />
-          </>
+        {!user ? <Route exact index path="/" element={<Home />} /> :
+          <Route path="/account" element={<Account />} />
         }
       </Routes>
     </Router>
