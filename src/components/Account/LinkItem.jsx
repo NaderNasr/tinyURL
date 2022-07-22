@@ -10,7 +10,7 @@ const LinkItem = ({ id, createdAt, name, longURL, shortHash, numOfClicks }) => {
       <Box display='flex' justifyContent='space-between' alignItems='center'>
         <Box>
           <Typography variant="overline">
-            created at: {format(createdAt, 'd MMM y, HH:mm')}
+            {String(createdAt)}
           </Typography>
           <Box my={1}>
             <Typography variant="h5">
