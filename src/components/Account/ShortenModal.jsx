@@ -19,7 +19,7 @@ const ShortenModal = ({ handleClose, createShortLink, setName, setLinks }) => {
   }
 
   const handleSubmit = () => {
-    createShortLink(form.name, form.longURL)
+    createShortLink()
   }
 
   return (
