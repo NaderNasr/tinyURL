@@ -27,22 +27,10 @@ const Account = () => {
     getUsers();
   }, [])
 
-  const data = Date.now()
-  console.log(new Date(Date.now()).toUTCString())
-
-
-  const createShortLink = async (name, longURL) => {
+  const createShortLink = async () => {
 
     const userId = auth.currentUser.uid
-    // setLinks([
-    //   {
-    //     name, longURL,
-    //     createdAt: Date.now(),
-    //     shortHash: nanoid(7),
-    //     numOfClicks: 0,
-    //     currentUser: userId
-    //   }
-    // ])
+
     await addDoc(collectionReference, {
       name: newName,
       longURL: links,
@@ -52,14 +40,11 @@ const Account = () => {
       currentUser: userId
     })
 
-    // console.log(links)
-
     setOpenModal(false)
+    console.log('users', users)
+
 
   }
-
-
-  console.log('users', users)
 
   return (
     <>
