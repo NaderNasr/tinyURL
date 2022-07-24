@@ -31,11 +31,12 @@ const Account = () => {
   const createShortLink = async () => {
 
     const userId = auth.currentUser.uid
+    const date = new Date(Date.now()).toUTCString()
 
     await addDoc(collectionReference, {
       name: newName,
       longURL: links,
-      createdAt: new Date(Date.now()).toUTCString(),
+      createdAt: date,
       shortHash: nanoid(7),
       numOfClicks: 0,
       currentUser: userId
@@ -46,6 +47,8 @@ const Account = () => {
     setOpenModal(false)
     console.log('users', users)
   }
+
+
 
   return (
     <>
@@ -67,7 +70,10 @@ const Account = () => {
               </Box>
               <Button variant='contained' color='primary' onClick={() => setOpenModal(true)}>Shorten Link</Button>
             </Box>
-            {users.map(link =>
+            {/* FIX SORTING BY DATE ------------------------------------------*/}
+            {/* FIX SORTING BY DATE */}
+            {/* FIX SORTING BY DATE */}
+            {users.sort((prev, next) => prev.createdAt - next.createdAt ).map(link =>
               <Fragment key={link.id}>
                 <LinkItem
                   //faster way to send all props to linkItem component
