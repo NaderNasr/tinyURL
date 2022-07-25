@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react'
+import React, { Fragment, useCallback, useEffect, useMemo, useState } from 'react'
 import { Box, Button, Divider, Grid, Typography } from "@material-ui/core"
 import NavBar from './NavBar'
 import LinkItem from './LinkItem'
@@ -19,10 +19,11 @@ const Account = () => {
 
   const collectionReference = collection(db, 'users');
 
-  const getLinksFromUser = async () => {
+  const getLinksFromUser = useMemo(() => 
+  async () => {
     const data = await getDocs(collectionReference);
     setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-  }
+  }, [collectionReference])
 
   useEffect(() => {
     getLinksFromUser()
@@ -41,18 +42,18 @@ const Account = () => {
 
     await addDoc(collectionReference, linkPath)
 
-
     getLinksFromUser()
     setOpenModal(false)
     console.log('users', users)
   }
 
-  const deleteLink = async linkDocID => {
-    const docRef = doc(db, "users", linkDocID);
-    // console.log(linkDocID)
-    await deleteDoc(docRef);
-    getLinksFromUser()
-  }
+  const deleteLink = useCallback(
+    async linkDocID => {
+      const docRef = doc(db, "users", linkDocID);
+      // console.log(linkDocID)
+      await deleteDoc(docRef);
+      getLinksFromUser()
+    }, [getLinksFromUser])
 
 
   return (
@@ -83,7 +84,7 @@ const Account = () => {
                 <LinkItem
                   //faster way to send all props to linkItem component
                   {...link}
-                  deleteLink={() => deleteLink(link.id)}
+                  deleteLink={deleteLink}
                 />
                 <Box my={5}>
                   <Divider />
