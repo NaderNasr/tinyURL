@@ -1,6 +1,7 @@
 import { Typography, Button, Box } from "@material-ui/core"
 import { BarChart } from "@material-ui/icons"
 import format from 'date-fns/format'
+import { memo } from "react"
 
 
 
@@ -31,7 +32,7 @@ const LinkItem = ({ id, createdAt, name, longURL, shortHash, numOfClicks, delete
               Copy
             </Button>
             <Button
-              onClick={deleteLink}
+              onClick={() => deleteLink(id)}
               variant="outlined"
               size="small"
               style={{ marginLeft: '20px', color: 'red' }}>
@@ -50,4 +51,4 @@ const LinkItem = ({ id, createdAt, name, longURL, shortHash, numOfClicks, delete
   )
 }
 
-export default LinkItem
+export default memo(LinkItem)
