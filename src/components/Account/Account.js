@@ -51,6 +51,7 @@ const Account = () => {
     const docRef = doc(db, "users", linkDocID);
     // console.log(linkDocID)
     await deleteDoc(docRef);
+    getLinksFromUser()
   }
 
 
