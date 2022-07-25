@@ -4,7 +4,7 @@ import format from 'date-fns/format'
 
 
 
-const LinkItem = ({ id, createdAt, name, longURL, shortHash, numOfClicks }) => {
+const LinkItem = ({ id, createdAt, name, longURL, shortHash, numOfClicks, deleteLink }) => {
   return (
     <Box display='flex'>
       <Box display='flex' justifyContent='space-between' alignItems='center'>
@@ -27,13 +27,14 @@ const LinkItem = ({ id, createdAt, name, longURL, shortHash, numOfClicks }) => {
             <Button
               variant="outlined"
               size="small"
-              style={{marginLeft:'20px', color:'blue'}}>
+              style={{ marginLeft: '20px', color: 'blue' }}>
               Copy
             </Button>
             <Button
+              onClick={deleteLink}
               variant="outlined"
               size="small"
-              style={{marginLeft:'20px', color:'red'}}>
+              style={{ marginLeft: '20px', color: 'red' }}>
               Delete
             </Button>
 
