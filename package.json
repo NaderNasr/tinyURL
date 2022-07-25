@@ -25,7 +25,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "kill": "kill-port --port 9099,4000,5001,8080,9000,5000,8085,9199,8080,4400,4500 && firebase emulators:start --project default",
+    "kill-start": "kill-port --port 9099,4000,5001,8080,9000,5000,8085,9199,8080,4400,4500 && firebase emulators:start --export-on-exit --import=./firebase-emulators",
     "firebase": "firebase emulators:start --export-on-exit --import=./firebase-emulators"
   },
   "eslintConfig": {
