@@ -5,7 +5,7 @@ import LinkItem from './LinkItem'
 import ShortenModal from './ShortenModal'
 import { db, auth } from '../../firebase'
 import { nanoid } from 'nanoid'
-import { collection, addDoc, getDocs } from "firebase/firestore";
+import { collection, addDoc, getDocs, doc, deleteDoc } from "firebase/firestore";
 
 
 const Account = () => {
@@ -27,20 +27,19 @@ const Account = () => {
   useEffect(() => {
     getLinksFromUser()
   }, [])
-
+  const userId = auth.currentUser.uid
+  const date = new Date(Date.now()).toUTCString()
+  const linkPath = {
+    name: newName,
+    longURL: links,
+    createdAt: date,
+    shortHash: nanoid(7),
+    numOfClicks: 0,
+    currentUser: userId
+  }
   const createShortLink = async () => {
 
-    const userId = auth.currentUser.uid
-    const date = new Date(Date.now()).toUTCString()
-
-    await addDoc(collectionReference, {
-      name: newName,
-      longURL: links,
-      createdAt: date,
-      shortHash: nanoid(7),
-      numOfClicks: 0,
-      currentUser: userId
-    })
+    await addDoc(collectionReference, linkPath)
 
 
     getLinksFromUser()
@@ -48,6 +47,11 @@ const Account = () => {
     console.log('users', users)
   }
 
+  const deleteLink = async linkDocID => {
+    const docRef = doc(db, "users", linkDocID);
+    // console.log(linkDocID)
+    await deleteDoc(docRef);
+  }
 
 
   return (
@@ -73,11 +77,12 @@ const Account = () => {
             {/* FIX SORTING BY DATE ------------------------------------------*/}
             {/* FIX SORTING BY DATE */}
             {/* FIX SORTING BY DATE */}
-            {users.sort((prev, next) => prev.createdAt - next.createdAt ).map(link =>
+            {users.sort((prev, next) => prev.createdAt - next.createdAt).map(link =>
               <Fragment key={link.id}>
                 <LinkItem
                   //faster way to send all props to linkItem component
                   {...link}
+                  deleteLink={() => deleteLink(link.id)}
                 />
                 <Box my={5}>
                   <Divider />
