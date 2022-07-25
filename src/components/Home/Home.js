@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Typography, TextField, Button } from "@material-ui/core"
 import { auth } from '../../firebase'
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 
 const Home = () => {
 
@@ -23,6 +23,12 @@ const Home = () => {
     });
   }
 
+  const handleSignIn = async () => {
+    await signInWithEmailAndPassword(auth, form.email, form.password).catch((error) => {
+      alert(`Sign up error ${error}`);
+    });
+  }
+
   return (
     <>
       <Typography>Home</Typography>
@@ -39,7 +45,9 @@ const Home = () => {
         type='password'
         onChange={handleChange}
       />
-      <Button onClick={handleSignUp}>Sign in</Button>
+      <Button onClick={handleSignUp}>Sign Up</Button>
+      <Button onClick={handleSignIn}>Sign In</Button>
+
     </>
   )
 }
