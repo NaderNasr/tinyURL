@@ -5,7 +5,10 @@ import { memo } from "react"
 
 
 
-const LinkItem = ({ id, createdAt, name, longURL, shortHash, numOfClicks, deleteLink }) => {
+
+const LinkItem = ({ id, createdAt, name, longURL, shortHash, numOfClicks, deleteLink, handleCopyLink }) => {
+  const shortURL = `${window.location.host}/${shortHash}`
+
   return (
     <Box display='flex'>
       <Box display='flex' justifyContent='space-between' alignItems='center'>
@@ -23,9 +26,10 @@ const LinkItem = ({ id, createdAt, name, longURL, shortHash, numOfClicks, delete
           </Box>
           <Box mr={5} display='flex'>
             <Typography>
-              {window.location.hostname}/{shortHash}
+              {window.location.host}/{shortHash}
             </Typography>
             <Button
+              onClick={() => handleCopyLink(shortURL)}
               variant="outlined"
               size="small"
               style={{ marginLeft: '20px', color: 'blue' }}>
