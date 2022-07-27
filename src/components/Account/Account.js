@@ -1,11 +1,13 @@
 import React, { Fragment, useCallback, useEffect, useMemo, useState } from 'react'
-import { Box, Button, Divider, Grid, Typography } from "@material-ui/core"
+import { Box, Button, Divider, Grid, Typography, Snackbar } from "@material-ui/core"
 import NavBar from './NavBar'
 import LinkItem from './LinkItem'
 import ShortenModal from './ShortenModal'
 import { db, auth } from '../../firebase'
 import { nanoid } from 'nanoid'
 import { collection, addDoc, getDocs, doc, deleteDoc } from "firebase/firestore";
+import copy from 'copy-to-clipboard'
+
 
 
 const Account = () => {
@@ -14,16 +16,17 @@ const Account = () => {
   const [newName, setName] = useState('');
 
   const [users, setUsers] = useState([]);
-
   const [openModal, setOpenModal] = useState(false)
+
+  const [copied, setCopied] = useState(false)
 
   const collectionReference = collection(db, 'users');
 
-  const getLinksFromUser = useMemo(() => 
-  async () => {
-    const data = await getDocs(collectionReference);
-    setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-  }, [collectionReference])
+  const getLinksFromUser = useMemo(() =>
+    async () => {
+      const data = await getDocs(collectionReference);
+      setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    }, [collectionReference])
 
   useEffect(() => {
     getLinksFromUser()
@@ -55,9 +58,14 @@ const Account = () => {
       getLinksFromUser()
     }, [getLinksFromUser])
 
+    const handleCopyLink = useCallback(shortURL => {
+      copy(shortURL)
+      setCopied(true)
+    }, [])
 
   return (
     <>
+      <Snackbar severity="info" open={copied} onClose={() => setCopied(false)} autoHideDuration={2000} message='Copied!' />
       <NavBar />
       {openModal ? <ShortenModal
         createShortLink={createShortLink}
@@ -85,6 +93,7 @@ const Account = () => {
                   //faster way to send all props to linkItem component
                   {...link}
                   deleteLink={deleteLink}
+                  handleCopyLink={handleCopyLink}
                 />
                 <Box my={5}>
                   <Divider />
