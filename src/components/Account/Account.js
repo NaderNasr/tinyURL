@@ -1,5 +1,6 @@
 import React, { Fragment, useCallback, useEffect, useMemo, useState } from 'react'
 import { Box, Button, Divider, Grid, Typography, Snackbar } from "@material-ui/core"
+import Alert from '@mui/material/Alert'
 import NavBar from './NavBar'
 import LinkItem from './LinkItem'
 import ShortenModal from './ShortenModal'
@@ -58,14 +59,17 @@ const Account = () => {
       getLinksFromUser()
     }, [getLinksFromUser])
 
-    const handleCopyLink = useCallback(shortURL => {
-      copy(shortURL)
-      setCopied(true)
-    }, [])
+  const handleCopyLink = useCallback(shortURL => {
+    copy(shortURL)
+    setCopied(true)
+  }, [])
 
   return (
     <>
-      <Snackbar severity="info" open={copied} onClose={() => setCopied(false)} autoHideDuration={2000} message='Copied!' />
+      <Snackbar open={copied} onClose={() => setCopied(false)} autoHideDuration={2000}>
+        <Alert open={copied} onClose={() => setCopied(false)} variant="filled" severity="success">Copied!</Alert>
+      </Snackbar>
+
       <NavBar />
       {openModal ? <ShortenModal
         createShortLink={createShortLink}
