@@ -3,8 +3,11 @@
   "version": "0.1.0",
   "private": false,
   "dependencies": {
+    "@emotion/react": "^11.9.3",
+    "@emotion/styled": "^11.9.3",
     "@material-ui/core": "^4.12.4",
     "@material-ui/icons": "^4.11.3",
+    "@mui/material": "^5.9.2",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",
@@ -26,7 +29,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "kill-start": "kill-port --port 9099,4000,5001,8080,9000,5000,8085,9199,8080,4400,4500 && firebase emulators:start --export-on-exit --import=./firebase-emulators",
+    "kill-start": "kill-port --port 4000, 8080, 8000, 5000 && firebase emulators:start --export-on-exit --import=./firebase-emulators",
     "firebase": "firebase emulators:start --export-on-exit --import=./firebase-emulators"
   },
   "eslintConfig": {
