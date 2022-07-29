@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom"
+import { BrowserRouter as Router, Routes, Route, Link, Navigate } from "react-router-dom"
 import { Box } from '@material-ui/core'
 import UseAnimations from 'react-useanimations';
 // EVERY ANIMATION NEEDS TO BE IMPORTED FIRST -> YOUR BUNDLE WILL INCLUDE ONLY WHAT IT NEEDS
@@ -32,15 +32,9 @@ const App = () => {
   // console.log(user)
   return (
     <Router>
-      {!user ?
-        <Link to='/'>Home</Link>
-        :
-        <Link to='/account'>Account</Link>
-      }
+      {!user ? <Link to='/'>Home</Link> : <Link to='/account'>Account</Link>}
       <Routes>
-        {!user ? <Route exact index path="/" element={<Home />} /> :
-          <Route path="/account" element={<Account />} />
-        }
+        <Route exact path="/" element={!user ? <Home/> : <Account />} />
       </Routes>
     </Router>
   )
