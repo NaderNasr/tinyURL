@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { BrowserRouter as Router, Routes, Route, Link, Navigate } from "react-router-dom"
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom"
 import { Box } from '@material-ui/core'
 import UseAnimations from 'react-useanimations';
 // EVERY ANIMATION NEEDS TO BE IMPORTED FIRST -> YOUR BUNDLE WILL INCLUDE ONLY WHAT IT NEEDS
@@ -10,6 +10,7 @@ import Account from "./components/Account/Account"
 import Home from "./components/Home/Home"
 
 import './App.css'
+import RedirectLink from './components/Redirect/RedirectLink';
 
 const App = () => {
 
@@ -32,9 +33,9 @@ const App = () => {
   // console.log(user)
   return (
     <Router>
-      {!user ? <Link to='/'>Home</Link> : <Link to='/account'>Account</Link>}
       <Routes>
         <Route exact path="/" element={!user ? <Home/> : <Account />} />
+        <Route path='/:shortHash' element={<RedirectLink/>}/>
       </Routes>
     </Router>
   )
