@@ -54,7 +54,6 @@ const Account = () => {
   const deleteLink = useCallback(
     async linkDocID => {
       const docRef = doc(db, "users", linkDocID);
-      // console.log(linkDocID)
       await deleteDoc(docRef);
       getLinksFromUser()
     }, [getLinksFromUser])
