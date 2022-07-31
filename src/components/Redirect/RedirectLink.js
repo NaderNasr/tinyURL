@@ -1,5 +1,5 @@
-import { Box } from "@material-ui/core";
-import { collection, doc, getDocs } from "firebase/firestore";
+import { Box, Typography } from "@material-ui/core";
+import { collection, getDocs } from "firebase/firestore";
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import UseAnimations from "react-useanimations";
@@ -9,9 +9,11 @@ import loading2 from 'react-useanimations/lib/loading2'
 
 
 const RedirectLink = () => {
+  const [document, setDocument] = useState([]);
+  const [loading, setLoading] = useState(false);
+
   const { shortHash } = useParams()
   const collectionReference = collection(db, 'users');
-  const [document, setDocument] = useState([]);
 
   useEffect(() => {
     const getLink = async () => {
@@ -22,32 +24,41 @@ const RedirectLink = () => {
           if (doc.data().shortHash === shortHash) {
             users.push({ ...doc.data(), id: doc.id });
           }
+        } else {
+
+          return null
         }
       });
       setDocument(users);
     };
-
     getLink();
-  }, []);
+  }, [shortHash]);
 
-  console.log(document)
-  console.log(document.length > 0 ? window.location.href = document[0].longURL : null)
+  const link = () => {
+    if (document.length > 0) {
+      setLoading(false)
+      return window.location.href = document[0].longURL
+    }
 
+  }
 
+  link()
+
+  const passed = <Box
+    display='flex'
+    flexDirection='column'
+    alignItems='center'
+    justifyContent='center'
+    mt={5}>
+    <UseAnimations animation={loading2} size={75} />
+    <Typography>Redirecting...</Typography>
+  </Box>
 
   return (
-    <div>
+    <>
       {/* {JSON.stringify(shortHash, null, 2)} */}
-      <Box mt={5} display='flex' justifyContent='center'>
-        <UseAnimations animation={loading2} size={75} />
-        <h1>Redirecting</h1>
-      </Box>
-      {/* {document ?
-        window.location.href = document[0].longURL
-        :
-        console.log('none')
-      } */}
-    </div>
+      {!loading ? <Typography>Failed</Typography> : passed}
+    </>
   )
 }
 
