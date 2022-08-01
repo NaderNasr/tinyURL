@@ -1,5 +1,5 @@
 import React, { Fragment, useCallback, useEffect, useMemo, useState } from 'react'
-import { Box, Button, Divider, Grid, Typography, Snackbar } from "@material-ui/core"
+import { Box, Button, Grid, Typography, Snackbar } from "@material-ui/core"
 import Alert from '@mui/material/Alert'
 import NavBar from './NavBar'
 import LinkItem from './LinkItem'
@@ -10,8 +10,7 @@ import { collection, addDoc, getDocs, doc, deleteDoc } from "firebase/firestore"
 import copy from 'copy-to-clipboard'
 
 
-
-const Account = () => {
+const Account = ({ user }) => {
 
   const [links, setLinks] = useState({});
   const [newName, setName] = useState('');
@@ -23,17 +22,8 @@ const Account = () => {
 
   const collectionReference = collection(db, 'users');
 
-  const getLinksFromUser = useMemo(() =>
-    async () => {
-      const data = await getDocs(collectionReference);
-      setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    }, [collectionReference])
-
-  useEffect(() => {
-    getLinksFromUser()
-  }, [])
   const userId = auth.currentUser.uid
-  const date = new Date(Date.now()).toUTCString()
+  const date = new Date(Date.now()).toLocaleString()
   const linkPath = {
     name: newName,
     longURL: links,
@@ -42,6 +32,18 @@ const Account = () => {
     numOfClicks: 0,
     currentUser: userId
   }
+
+  const getLinksFromUser = useMemo(() =>
+    async () => {
+      const data = await getDocs(collectionReference);
+      if (userId === user.uid) {
+        setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      }
+    }, [collectionReference])
+
+  useEffect(() => {
+    getLinksFromUser()
+  }, [])
   const createShortLink = async () => {
 
     await addDoc(collectionReference, linkPath)
@@ -55,6 +57,7 @@ const Account = () => {
     async linkDocID => {
       const docRef = doc(db, "users", linkDocID);
       await deleteDoc(docRef);
+
       getLinksFromUser()
     }, [getLinksFromUser])
 
@@ -87,19 +90,16 @@ const Account = () => {
               </Box>
               <Button variant='contained' color='primary' onClick={() => setOpenModal(true)}>Shorten Link</Button>
             </Box>
-            {/* FIX SORTING BY DATE ------------------------------------------*/}
-            {/* FIX SORTING BY DATE */}
-            {/* FIX SORTING BY DATE */}
+
             {users.sort((prev, next) => prev.createdAt - next.createdAt).map(link =>
               <Fragment key={link.id}>
                 <LinkItem
-                  //faster way to send all props to linkItem component
                   {...link}
                   deleteLink={deleteLink}
                   handleCopyLink={handleCopyLink}
+                  user={user}
                 />
                 <Box my={5}>
-                  <Divider />
                 </Box>
               </Fragment>
             )}
