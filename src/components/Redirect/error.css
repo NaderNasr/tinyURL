@@ -1,0 +1,28 @@
+#fourOfour {
+  font-size: 15em;
+}
+
+.btn-grad {
+  color: #fff;
+  background-image: linear-gradient(
+    to right,
+    #606c88 0%,
+    #3f4c6b 51%,
+    #1e51c8 100%
+  );
+  padding: 15px 45px;
+  text-align: center;
+  text-transform: uppercase;
+  transition: 0.5s;
+  background-size: 200% auto;
+  box-shadow: 0 0 20px #eee;
+  border-radius: 10px;
+  display: block;
+  width: 200px;
+}
+
+.btn-grad:hover {
+  background-position: right center; /* change the direction of the change here */
+  color: #fff;
+  text-decoration: none;
+}
