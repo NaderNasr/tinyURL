@@ -17,6 +17,8 @@ const App = () => {
   const [user, setUser] = useState(null);
   const [isLoaded, setIsLoaded] = useState(true)
 
+
+
   useEffect(() => {
     auth.onAuthStateChanged((isAuthenticated) => {
       setUser(isAuthenticated)
@@ -30,12 +32,11 @@ const App = () => {
     </Box>
   )
 
-  // console.log(user)
   return (
     <Router>
       <Routes>
-        <Route exact path="/" element={!user ? <Home/> : <Account />} />
-        <Route path='/:shortHash' element={<RedirectLink/>}/>
+        <Route exact path="/" element={!user ? <Home /> : <Account user={user} />} />
+        <Route path='/:shortHash' element={<RedirectLink />} />
       </Routes>
     </Router>
   )
