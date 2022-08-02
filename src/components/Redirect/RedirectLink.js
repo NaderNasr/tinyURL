@@ -1,5 +1,5 @@
 import { Box, Typography } from "@material-ui/core";
-import { collection, getDocs, increment, setDoc, updateDoc } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import UseAnimations from "react-useanimations";
@@ -11,7 +11,7 @@ import Error from "./Error";
 
 const RedirectLink = () => {
   const [document, setDocument] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const { shortHash } = useParams()
 
   const collectionReference = collection(db, 'users');
@@ -21,15 +21,13 @@ const RedirectLink = () => {
     const getLink = async () => {
       const data = await getDocs(collectionReference);
 
-
       let users = [];
       data.docs.forEach((doc) => {
-        if (doc.data().shortHash) {
-          if (doc.data().shortHash === shortHash) {
+        if (doc.data()?.shortHash) {
+          if (doc.data()?.shortHash === shortHash) {
+            setLoading(true)
             users.push({ ...doc.data(), id: doc.id });
           }
-        } else {
-
           setLoading(false)
         }
       });
@@ -39,11 +37,17 @@ const RedirectLink = () => {
     getLink();
   }, [shortHash]);
 
-  const link = async () => {
-    if (document.length > 0) {
-      return window.location.href = document[0].longURL
-    }
+  console.log('document', document)
 
+  const link = async () => {
+    if (await document?.length === 1) {
+      setLoading(true)
+      for (let property of document) {
+        setTimeout(function () {
+          window.location.href = property.longURL
+        }, 2000);//wait 2 seconds
+      }
+    }
   }
 
   link()
@@ -51,19 +55,19 @@ const RedirectLink = () => {
 
   return (
     <>
-      {loading !== true ?
-
-        <Error shortHash={shortHash} />
-        :
-        <Box
-          display='flex'
-          flexDirection='column'
-          alignItems='center'
-          justifyContent='center'
-          mt={10}>
-          <UseAnimations animation={loading2} size={75} />
-          <Typography>Redirecting...</Typography>
-        </Box>
+      {
+        loading ?
+          <Box
+            display='flex'
+            flexDirection='column'
+            alignItems='center'
+            justifyContent='center'
+            mt={10}>
+            <UseAnimations animation={loading2} size={75} />
+            <Typography>Redirecting...</Typography>
+          </Box>
+          :
+          <Error shortHash={shortHash} />
       }
     </>
   )
