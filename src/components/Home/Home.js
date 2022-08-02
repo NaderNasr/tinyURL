@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
-import { Typography, TextField, Button } from "@material-ui/core"
-import { auth } from '../../firebase'
+import React, { useState } from 'react';
+import { Typography, TextField, Button } from "@material-ui/core";
+import { auth } from '../../firebase';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import './Home.css';
 
 const Home = () => {
 
@@ -30,25 +31,42 @@ const Home = () => {
   }
 
   return (
-    <>
-      <Typography>Home</Typography>
+    <div
+      style={{ margin: '5em' }}
+    >
+      <div>
+      <Typography>TinyURL</Typography>
 
-      <TextField
-        value={form.email}
-        name='email'
-        onChange={handleChange}
-        label='Email' />
-      <TextField
-        value={form.password}
-        label='Password'
-        name='password'
-        type='password'
-        onChange={handleChange}
-      />
-      <Button onClick={handleSignUp}>Sign Up</Button>
-      <Button onClick={handleSignIn}>Sign In</Button>
+        <TextField
+          value={form.email}
+          name='email'
+          onChange={handleChange}
+          label='Email'
+          id="outlined-basic"
+          variant="outlined"
+          fullWidth
+          style={{ marginTop: '5em' }}
+        />
+        <TextField
+          value={form.password}
+          label='Password'
+          name='password'
+          type='password'
+          id="outlined-basic"
+          variant="outlined"
+          onChange={handleChange}
+          fullWidth
+          style={{ marginTop: '2em' }}
+        />
+        <div
+          style={{ marginTop: '2em', display: 'flex', justifyContent: 'space-between' }}
+        >
+          <Button onClick={handleSignIn}>Sign In</Button>
+          <Button onClick={handleSignUp}>Sign Up</Button>
+        </div>
+      </div>
 
-    </>
+    </div>
   )
 }
 
