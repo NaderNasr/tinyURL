@@ -7,8 +7,8 @@ npm run firebase
 
 
 ## Road map
-[ ✅  ] Authentication
-[ ✅  ] Create Short Links
-[ ✅  ] Cloud Functions
-[ ✅  ] Redirect short to longURL
+[ ✅  ] Authentication <br />
+[ ✅  ] Create Short Links <br />
+[ ✅  ] Cloud Functions <br />
+[ ✅  ] Redirect short to longURL <br />
 [ ] increment Total clicks
