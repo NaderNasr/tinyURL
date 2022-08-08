@@ -8,14 +8,12 @@ import loading2 from 'react-useanimations/lib/loading2'
 import Error from "./Error";
 
 
-
 const RedirectLink = () => {
   const [document, setDocument] = useState([]);
   const [loading, setLoading] = useState(true);
   const { shortHash } = useParams()
 
   const collectionReference = collection(db, 'users');
-
 
   useEffect(() => {
     const getLink = async () => {
@@ -32,7 +30,6 @@ const RedirectLink = () => {
         }
       });
       setDocument(users);
-
     };
     getLink();
   }, [shortHash]);
@@ -51,7 +48,6 @@ const RedirectLink = () => {
   }
 
   link()
-
 
   return (
     <>
