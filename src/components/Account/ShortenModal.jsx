@@ -22,12 +22,23 @@ const ShortenModal = ({ handleClose, createShortLink, setName, setLinks }) => {
     createShortLink()
   }
 
-  const isValidUrl = (string) => {
-    const matchPattern = /^(?:\w+:)?\/\/([^\s\.]+\.\S{2}|localhost[\:?\d]*)\S*$/;
-    return matchPattern.test(string);
+  const validateURL = (string) => {
+    if(string.includes('http://')){
+      return string.slice(7)
+    } else if (string.includes('https://')){
+      return string.slice(8)
+    }
+    return string
   }
 
-  const checkLink = url => isValidUrl(url) ? true : false
+
+  const validateName = (stringName) => {
+    if(stringName.length < 0){
+      console.log('please add a name')
+    }
+    return stringName
+  }
+
 
   return (
     <Dialog open={true} fullWidth>
@@ -43,12 +54,11 @@ const ShortenModal = ({ handleClose, createShortLink, setName, setLinks }) => {
         <Box mb={3}>
           <TextField value={setName(form.name)} name='name' onChange={handleChange} fullWidth variant='filled' label='Name' />
         </Box>
-        <TextField value={setLinks(form.longURL)} name='longURL' onChange={handleChange} fullWidth variant='filled' label='Long URL' placeholder='http://'/>
+        <TextField value={setLinks(validateURL(form.longURL))} name='longURL' onChange={handleChange} fullWidth variant='filled' label='Long URL' placeholder='http://' />
       </DialogContent>
       <DialogActions>
         <Box mr={2} my={1}>
-          <Button onClick={handleSubmit} disabled={!checkLink(form.longURL)} color='primary' variant='contained' disableElevation>Shorten URL</Button>
-
+          <Button onClick={handleSubmit} disabled={!validateURL(form.longURL) || !validateName(form.name)} color='primary' variant='contained' disableElevation>Shorten URL</Button>
         </Box>
       </DialogActions>
     </Dialog>
