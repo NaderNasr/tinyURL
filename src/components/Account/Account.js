@@ -26,7 +26,7 @@ const Account = ({ user }) => {
   const date = new Date(Date.now()).toLocaleString()
   const linkPath = {
     name: newName,
-    longURL: links,
+    longURL: `http://${links}`,
     createdAt: date,
     shortHash: nanoid(7),
     numOfClicks: 0,
@@ -72,7 +72,7 @@ const Account = ({ user }) => {
         <Alert open={copied} onClose={() => setCopied(false)} variant="filled" severity="success">Copied!</Alert>
       </Snackbar>
 
-      <NavBar />
+      <NavBar users={users} />
       {openModal ? <ShortenModal
         createShortLink={createShortLink}
         openModal={openModal}
